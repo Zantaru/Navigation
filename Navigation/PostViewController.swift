@@ -22,8 +22,7 @@ final class PostViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupPost()
-        makeBarItem()
-        
+        makeBarItem()        
     }
     
     private func setupPost() {
