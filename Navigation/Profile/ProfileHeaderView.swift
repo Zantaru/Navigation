@@ -15,7 +15,7 @@ final class ProfileHeaderView: UIView {
     
     //Лейбл для имени пользователя
     
-    lazy var labelName: UILabel = {
+    lazy var fullNameLabel: UILabel = {
        let label = UILabel(frame: CGRect(x: 152, y: 27, width: 200, height: 30))
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.boldSystemFont(ofSize: 18)
@@ -25,7 +25,7 @@ final class ProfileHeaderView: UIView {
 
     //Лейбл для текста статуса
     
-    lazy var labelText: UILabel = {
+    lazy var statusLabel: UILabel = {
        let label = UILabel(frame: CGRect(x: 152, y: 92, width: 200, height: 30))
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 14)
@@ -36,7 +36,7 @@ final class ProfileHeaderView: UIView {
     
     //Аватарка
     
-    lazy var image: UIImageView = {
+    lazy var avatarImageView: UIImageView = {
         let image = UIImageView(frame: CGRect(x: 16, y: 16, width: 120, height: 120))
         image.translatesAutoresizingMaskIntoConstraints = false
         image.image = UIImage(named: "BjceNTX0ZSU")
@@ -50,7 +50,7 @@ final class ProfileHeaderView: UIView {
     
     //Кнопка показать статус
     
-    lazy var statusButton: UIButton = {
+    lazy var setStatusButton: UIButton = {
         let button = UIButton(frame: CGRect(x: 16, y: 176, width: UIScreen.main.bounds.width - 32, height: 50))
         button.translatesAutoresizingMaskIntoConstraints = false
         button.layer.cornerRadius = 4.0
@@ -67,7 +67,7 @@ final class ProfileHeaderView: UIView {
     
     //Поле для ввода текста статуса
     
-    lazy var textField: UITextField = {
+    lazy var statusTextField: UITextField = {
         let textField = UITextField(frame: CGRect(x: 152, y: 120, width: UIScreen.main.bounds.width - 168, height: 40))
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.backgroundColor = .white
@@ -78,6 +78,8 @@ final class ProfileHeaderView: UIView {
         textField.layer.borderWidth = 1
         textField.layer.borderColor = UIColor.black.cgColor
         textField.addTarget(self, action: #selector(statusTextChanged), for: .editingChanged)
+        textField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: textField.frame.height))
+        textField.leftViewMode = .always
         return textField
     }()
     
@@ -85,11 +87,11 @@ final class ProfileHeaderView: UIView {
     init() {
         super.init(frame: .init(x: 0, y: 100, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - 200)) //Измеяю размер фрейма для соответсвия макету
         backgroundColor = .lightGray
-        addSubview(labelName)
-        addSubview(image)
-        addSubview(labelText)
-        addSubview(statusButton)
-        addSubview(textField)
+        addSubview(fullNameLabel)
+        addSubview(avatarImageView)
+        addSubview(statusLabel)
+        addSubview(setStatusButton)
+        addSubview(statusTextField)
     }
     
     required init?(coder: NSCoder) {
@@ -99,15 +101,16 @@ final class ProfileHeaderView: UIView {
     //Записываем текст из поля ввода в переменную
     
     @objc func statusTextChanged() {
-        if textField.text != nil {
-            statusText = textField.text!
+        if statusTextField.text != nil {
+            statusText = statusTextField.text!
         }
     }
     
     //Передаем текст из переменной в лейбл
     
     @objc func tapAction () {
-        labelText.text = statusText
+        statusLabel.text = statusText
+        print(statusText!)
     }
     
 }
