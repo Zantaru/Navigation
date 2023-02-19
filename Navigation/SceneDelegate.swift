@@ -14,17 +14,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let scene = (scene as? UIWindowScene) else { return }
-        let feedViewController = UINavigationController(rootViewController: FeedViewController())
-        let profileViewController = UINavigationController(rootViewController: ProfileViewController())
-        let tabBarController = UITabBarController()
-        tabBarController.viewControllers = [feedViewController, profileViewController]
-        feedViewController.tabBarItem.title = "Сообщения"
-        feedViewController.tabBarItem.image = UIImage(systemName: "pencil")
-        profileViewController.tabBarItem.title = "Профиль"
-        profileViewController.tabBarItem.image = UIImage(systemName: "folder")
-        
         window = UIWindow(windowScene: scene)
-        window?.rootViewController = tabBarController
+        window?.rootViewController = MainTabBarController()
         window?.makeKeyAndVisible()
     }
 
