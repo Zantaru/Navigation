@@ -24,7 +24,8 @@ final class FeedViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .lightGray
+        view.backgroundColor = .white
+        self.navigationItem.title = "Feed"
         setupButton()
 
     }
@@ -40,5 +41,7 @@ final class FeedViewController: UIViewController {
         navigationController?.pushViewController(postScreen, animated: true)
         
     }
+    
+    
     
 }
