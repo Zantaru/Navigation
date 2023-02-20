@@ -8,36 +8,29 @@
 import UIKit
 
 final class ProfileHeaderView: UIView {
-
-    //Переменная для хранения вводимого текста
     
     private var statusText: String?
-    
-    //Лейбл для имени пользователя
+    private var portraitLayout = [NSLayoutConstraint]()
     
     lazy var fullNameLabel: UILabel = {
-       let label = UILabel(frame: CGRect(x: 152, y: 27, width: 200, height: 30))
+       let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.boldSystemFont(ofSize: 18)
         label.text = "Viktiriia Nikolaeva"
         return label
     }()
-
-    //Лейбл для текста статуса
     
     lazy var statusLabel: UILabel = {
-       let label = UILabel(frame: CGRect(x: 152, y: 92, width: 200, height: 30))
+       let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 14)
         label.textColor = .gray
         label.text = "Waiting for something..."
         return label
     }()
-    
-    //Аватарка
-    
+
     lazy var avatarImageView: UIImageView = {
-        let image = UIImageView(frame: CGRect(x: 16, y: 16, width: 120, height: 120))
+        let image = UIImageView()
         image.translatesAutoresizingMaskIntoConstraints = false
         image.image = UIImage(named: "BjceNTX0ZSU")
         image.contentMode = .scaleAspectFill
@@ -48,10 +41,8 @@ final class ProfileHeaderView: UIView {
         return image
     }()
     
-    //Кнопка показать статус
-    
     lazy var setStatusButton: UIButton = {
-        let button = UIButton(frame: CGRect(x: 16, y: 176, width: UIScreen.main.bounds.width - 32, height: 50))
+        let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.layer.cornerRadius = 4.0
         button.setTitle("Show status", for: .normal)
@@ -65,10 +56,8 @@ final class ProfileHeaderView: UIView {
         return button
     }()
     
-    //Поле для ввода текста статуса
-    
     lazy var statusTextField: UITextField = {
-        let textField = UITextField(frame: CGRect(x: 152, y: 120, width: UIScreen.main.bounds.width - 168, height: 40))
+        let textField = UITextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.backgroundColor = .white
         textField.font = UIFont.systemFont(ofSize: 15)
@@ -84,29 +73,45 @@ final class ProfileHeaderView: UIView {
     }()
     
     
-    init() {
-        super.init(frame: .init(x: 0, y: 100, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - 200)) //Измеяю размер фрейма для соответсвия макету
-        backgroundColor = .lightGray
+    func layout () {
         addSubview(fullNameLabel)
         addSubview(avatarImageView)
         addSubview(statusLabel)
         addSubview(setStatusButton)
         addSubview(statusTextField)
+        
+        portraitLayout = [
+            avatarImageView.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: 16),
+            avatarImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
+            avatarImageView.heightAnchor.constraint(equalToConstant: 120),
+            avatarImageView.widthAnchor.constraint(equalToConstant: 120),
+            
+            fullNameLabel.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: 27),
+            fullNameLabel.leadingAnchor.constraint(equalTo: avatarImageView.trailingAnchor, constant: 16),
+            
+            setStatusButton.topAnchor.constraint(equalTo: avatarImageView.bottomAnchor, constant: 36),
+            setStatusButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
+            setStatusButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
+            setStatusButton.heightAnchor.constraint(equalToConstant: 50),
+        
+            statusLabel.bottomAnchor.constraint(equalTo: setStatusButton.topAnchor, constant: -72),
+            statusLabel.leadingAnchor.constraint(equalTo: fullNameLabel.leadingAnchor),
+            
+            statusTextField.bottomAnchor.constraint(equalTo: setStatusButton.topAnchor, constant: -16),
+            statusTextField.leadingAnchor.constraint(equalTo: fullNameLabel.leadingAnchor),
+            statusTextField.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
+            statusTextField.heightAnchor.constraint(equalToConstant: 40)
+        ]
+        
+        NSLayoutConstraint.activate(portraitLayout)
+        
     }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    //Записываем текст из поля ввода в переменную
     
     @objc func statusTextChanged() {
         if statusTextField.text != nil {
             statusText = statusTextField.text!
         }
     }
-    
-    //Передаем текст из переменной в лейбл
     
     @objc func tapAction () {
         statusLabel.text = statusText
