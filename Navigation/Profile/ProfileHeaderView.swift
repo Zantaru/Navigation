@@ -72,8 +72,21 @@ final class ProfileHeaderView: UIView {
         return textField
     }()
     
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        layout ()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     
     func layout () {
+        
+        self.translatesAutoresizingMaskIntoConstraints = false
+        self.backgroundColor = .lightGray
+        
         addSubview(fullNameLabel)
         addSubview(avatarImageView)
         addSubview(statusLabel)
