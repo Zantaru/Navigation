@@ -9,9 +9,8 @@ import UIKit
 
 final class ProfileHeaderView: UITableViewHeaderFooterView {
     
-    var color1 = UIColor(hex: "#4885cc")
     private var statusText: String?
-    private var portraitLayout = [NSLayoutConstraint]()
+    
     private let profileHeaderView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -19,72 +18,64 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
         return view
      }()
     
-    private let someButon: UIButton = {
-        let button = UIButton()
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle("Some Button", for: .normal)
-        button.backgroundColor = .blue
-        return button
+    private let fullNameLabel: UILabel = {
+       let view = UILabel()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.font = UIFont.boldSystemFont(ofSize: 18)
+        view.text = "Viktiriia Nikolaeva"
+        return view
     }()
     
-    lazy var fullNameLabel: UILabel = {
-       let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.boldSystemFont(ofSize: 18)
-        label.text = "Viktiriia Nikolaeva"
-        return label
-    }()
-    
-    lazy var statusLabel: UILabel = {
-       let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.systemFont(ofSize: 14)
-        label.textColor = .gray
-        label.text = "Waiting for something..."
-        return label
+    private let statusLabel: UILabel = {
+       let view = UILabel()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.font = UIFont.systemFont(ofSize: 14)
+        view.textColor = .gray
+        view.text = "Waiting for something..."
+        return view
     }()
 
-    lazy var avatarImageView: UIImageView = {
-        let image = UIImageView()
-        image.translatesAutoresizingMaskIntoConstraints = false
-        image.image = UIImage(named: "BjceNTX0ZSU")
-        image.contentMode = .scaleAspectFill
-        image.clipsToBounds = true
-        image.layer.cornerRadius = 60.0
-        image.layer.borderWidth = 3.0
-        image.layer.borderColor = UIColor.white.cgColor
-        return image
+    private let avatarImageView: UIImageView = {
+        let view = UIImageView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.image = UIImage(named: "BjceNTX0ZSU")
+        view.contentMode = .scaleAspectFill
+        view.clipsToBounds = true
+        view.layer.cornerRadius = 60.0
+        view.layer.borderWidth = 3.0
+        view.layer.borderColor = UIColor.white.cgColor
+        return view
     }()
     
     lazy var setStatusButton: UIButton = {
-        let button = UIButton()
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.layer.cornerRadius = 4.0
-        button.setTitle("Show status", for: .normal)
-        button.backgroundColor = color1
-        button.layer.shadowColor = UIColor.black.cgColor
-        button.layer.shadowOpacity = 0.7
-        button.layer.shadowOffset = CGSize(width: 4, height: 4)
-        button.layer.shadowRadius = 4.0
-        button.layer.masksToBounds = false
-        button.addTarget(self, action: #selector(tapAction), for: .touchUpInside)
-        return button
+        let view = UIButton()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.layer.cornerRadius = 4.0
+        view.setTitle("Show status", for: .normal)
+        view.backgroundColor = UIColor(hex: "#4885cc")
+        view.layer.shadowColor = UIColor.black.cgColor
+        view.layer.shadowOpacity = 0.7
+        view.layer.shadowOffset = CGSize(width: 4, height: 4)
+        view.layer.shadowRadius = 4.0
+        view.layer.masksToBounds = false
+        view.addTarget(self, action: #selector(tapAction), for: .touchUpInside)
+        return view
     }()
     
     lazy var statusTextField: UITextField = {
-        let textField = UITextField()
-        textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.backgroundColor = .white
-        textField.font = UIFont.systemFont(ofSize: 15)
-        textField.textColor = .black
-        textField.clearButtonMode = .always
-        textField.layer.cornerRadius = 12
-        textField.layer.borderWidth = 1
-        textField.layer.borderColor = UIColor.black.cgColor
-        textField.addTarget(self, action: #selector(statusTextChanged), for: .editingChanged)
-        textField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: textField.frame.height))
-        textField.leftViewMode = .always
-        return textField
+        let view = UITextField()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .white
+        view.font = UIFont.systemFont(ofSize: 15)
+        view.textColor = .black
+        view.clearButtonMode = .always
+        view.layer.cornerRadius = 12
+        view.layer.borderWidth = 1
+        view.layer.borderColor = UIColor.black.cgColor
+        view.addTarget(self, action: #selector(statusTextChanged), for: .editingChanged)
+        view.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: view.frame.height))
+        view.leftViewMode = .always
+        return view
     }()
     
     override init(reuseIdentifier: String?) {
@@ -98,7 +89,6 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
     
     
     func layout () {
-        
         addSubview(profileHeaderView)
         profileHeaderView.addSubview(fullNameLabel)
         profileHeaderView.addSubview(avatarImageView)
@@ -106,36 +96,35 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
         profileHeaderView.addSubview(setStatusButton)
         profileHeaderView.addSubview(statusTextField)
         
-        portraitLayout = [
+        NSLayoutConstraint.activate([
             profileHeaderView.topAnchor.constraint(equalTo: topAnchor),
             profileHeaderView.leadingAnchor.constraint(equalTo: leadingAnchor),
             profileHeaderView.trailingAnchor.constraint(equalTo: trailingAnchor),
             profileHeaderView.bottomAnchor.constraint(equalTo: bottomAnchor),
+//            profileHeaderView.heightAnchor.constraint(equalToConstant: 200),
             
-            avatarImageView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 16),
+            avatarImageView.topAnchor.constraint(equalTo: profileHeaderView.topAnchor, constant: 16),
             avatarImageView.leadingAnchor.constraint(equalTo: profileHeaderView.leadingAnchor, constant: 16),
             avatarImageView.heightAnchor.constraint(equalToConstant: 120),
             avatarImageView.widthAnchor.constraint(equalToConstant: 120),
             
-            fullNameLabel.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 27),
+            fullNameLabel.topAnchor.constraint(equalTo: profileHeaderView.topAnchor, constant: 27),
             fullNameLabel.leadingAnchor.constraint(equalTo: avatarImageView.trailingAnchor, constant: 16),
-            
+
             setStatusButton.topAnchor.constraint(equalTo: avatarImageView.bottomAnchor, constant: 36),
             setStatusButton.leadingAnchor.constraint(equalTo: profileHeaderView.leadingAnchor, constant: 16),
             setStatusButton.trailingAnchor.constraint(equalTo: profileHeaderView.trailingAnchor, constant: -16),
+            setStatusButton.bottomAnchor.constraint(equalTo: profileHeaderView.bottomAnchor, constant: -16),
             setStatusButton.heightAnchor.constraint(equalToConstant: 50),
-        
+
             statusLabel.bottomAnchor.constraint(equalTo: setStatusButton.topAnchor, constant: -72),
             statusLabel.leadingAnchor.constraint(equalTo: fullNameLabel.leadingAnchor),
-            
+
             statusTextField.bottomAnchor.constraint(equalTo: setStatusButton.topAnchor, constant: -16),
             statusTextField.leadingAnchor.constraint(equalTo: fullNameLabel.leadingAnchor),
             statusTextField.trailingAnchor.constraint(equalTo: profileHeaderView.trailingAnchor, constant: -16),
             statusTextField.heightAnchor.constraint(equalToConstant: 40)
-        ]
-        
-        NSLayoutConstraint.activate(portraitLayout)
-        
+        ])
     }
     
     @objc func statusTextChanged() {
