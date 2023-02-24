@@ -9,6 +9,7 @@ import UIKit
 
 final class ProfileHeaderView: UIView {
     
+    var color1 = UIColor(hex: "#4885cc")
     private var statusText: String?
     private var portraitLayout = [NSLayoutConstraint]()
     
@@ -46,7 +47,7 @@ final class ProfileHeaderView: UIView {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.layer.cornerRadius = 4.0
         button.setTitle("Show status", for: .normal)
-        button.backgroundColor = .systemTeal
+        button.backgroundColor = color1
         button.layer.shadowColor = UIColor.black.cgColor
         button.layer.shadowOpacity = 0.7
         button.layer.shadowOffset = CGSize(width: 4, height: 4)
@@ -128,7 +129,8 @@ final class ProfileHeaderView: UIView {
     
     @objc func tapAction () {
         statusLabel.text = statusText
-        print(statusText!)
+        if statusText != nil {
+            print(statusText!)
+        }
     }
-    
 }

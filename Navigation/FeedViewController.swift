@@ -36,7 +36,7 @@ final class FeedViewController: UIViewController {
         myStackView.spacing = 10
         return myStackView
     }()
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -51,7 +51,7 @@ final class FeedViewController: UIViewController {
             myStackView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ])
     }
-
+    
     private func setupButton() {
         nextPageButton.addTarget(self, action: #selector(tapAction), for: .touchUpInside)
         nextPageButton2.addTarget(self, action: #selector(tapAction), for: .touchUpInside)

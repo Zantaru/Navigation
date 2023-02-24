@@ -7,24 +7,24 @@
 
 import UIKit
 
-class MainTabBarController: UITabBarController {
+final class MainTabBarController: UITabBarController {
 
     private let feedViewController = UINavigationController(rootViewController: FeedViewController())
     private let profileViewController = UINavigationController(rootViewController: ProfileViewController())
+    private let logInViwController = UINavigationController(rootViewController: LogInViewController())
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupControllres()
-
-        // Do any additional setup after loading the view.
     }
+    
     
     private func setupControllres() {
         feedViewController.tabBarItem.title = "Feed"
         feedViewController.tabBarItem.image = UIImage(systemName: "house.fill")
-        profileViewController.tabBarItem.title = "Prifile"
-        profileViewController.tabBarItem.image = UIImage(systemName: "person.fill")
-        viewControllers = [feedViewController,profileViewController]
+        logInViwController.tabBarItem.title = "Prifile"
+        logInViwController.tabBarItem.image = UIImage(systemName: "person.fill")
+        viewControllers = [feedViewController,logInViwController]
     }
     
 }
