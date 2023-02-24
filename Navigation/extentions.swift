@@ -27,3 +27,9 @@ extension UIColor {
                   alpha: alpha)
     }
 }
+
+extension UIView {
+    static var identifaer: String {
+        String(describing: self)
+    }
+}

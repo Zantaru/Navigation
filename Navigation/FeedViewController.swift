@@ -7,13 +7,13 @@
 
 import UIKit
 
-struct Post {
+struct PostText {
     var title: String
 }
 
 final class FeedViewController: UIViewController {
 
-    var post = Post(title: "Hello World!")
+    var post = PostText(title: "Hello World!")
     
     private let nextPageButton: UIButton = {
         let button = UIButton(frame: CGRect(x: 0, y: 0, width: 200, height: 50))
