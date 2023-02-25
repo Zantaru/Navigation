@@ -7,13 +7,13 @@
 
 import UIKit
 
-struct Post {
+struct PostText {
     var title: String
 }
 
 final class FeedViewController: UIViewController {
 
-    var post = Post(title: "Hello World!")
+    var post = PostText(title: "Hello World!")
     
     private let nextPageButton: UIButton = {
         let button = UIButton(frame: CGRect(x: 0, y: 0, width: 200, height: 50))
@@ -36,7 +36,7 @@ final class FeedViewController: UIViewController {
         myStackView.spacing = 10
         return myStackView
     }()
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -51,7 +51,7 @@ final class FeedViewController: UIViewController {
             myStackView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ])
     }
-
+    
     private func setupButton() {
         nextPageButton.addTarget(self, action: #selector(tapAction), for: .touchUpInside)
         nextPageButton2.addTarget(self, action: #selector(tapAction), for: .touchUpInside)

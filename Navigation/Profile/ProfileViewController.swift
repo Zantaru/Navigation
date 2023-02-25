@@ -9,42 +9,60 @@ import UIKit
 
 final class ProfileViewController: UIViewController {
     
-    private var profileHeaderViewConstrain = [NSLayoutConstraint]()
     private let profileHeaderView = ProfileHeaderView()
-    private let someButon: UIButton = {
-        let button = UIButton()
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle("Some Button", for: .normal)
-        button.backgroundColor = .blue
-        return button
+    let post = Post.makePostsArray()
+    
+    private lazy var tableView: UITableView = {
+        let tableView = UITableView(frame: .zero, style: .plain)
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.backgroundColor = .white
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.register(PostTableViewCell.self, forCellReuseIdentifier: PostTableViewCell.identifaer)
+        return tableView
     }()
-
+   
+    override func loadView() {
+        super.loadView()
+ //       view = profileHeaderView
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupView()
-    }
-    
-    private func setupLayout() {
-    
-        profileHeaderViewConstrain = [
-            profileHeaderView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0),
-            profileHeaderView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
-            profileHeaderView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
-            profileHeaderView.bottomAnchor.constraint(equalTo: someButon.topAnchor),
-            
-            someButon.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            someButon.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            someButon.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
-        ]
-    
-        NSLayoutConstraint.activate(profileHeaderViewConstrain)
-    }
-    
-    private func setupView() {
-        view.backgroundColor = .white
         navigationItem.title = "Profile"
-        view.addSubview(profileHeaderView)
-        view.addSubview(someButon)
-        setupLayout()
+        view.backgroundColor = .white
+        layout()
+    }
+    private func layout() {
+        view.addSubview(tableView)
+        
+        NSLayoutConstraint.activate([
+            tableView.topAnchor.constraint(equalTo: view.topAnchor),
+            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+        ])
+    }
+}
+
+extension ProfileViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: PostTableViewCell.identifaer, for: indexPath) as! PostTableViewCell
+        cell.setupCell(post: post[indexPath.row])
+        return cell
+    }
+
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        post.count
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let view = ProfileHeaderView()
+        return view
+    }
+}
+
+extension ProfileViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        UITableView.automaticDimension
     }
 }
