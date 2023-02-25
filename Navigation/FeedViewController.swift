@@ -17,15 +17,23 @@ final class FeedViewController: UIViewController {
     
     private let nextPageButton: UIButton = {
         let button = UIButton(frame: CGRect(x: 0, y: 0, width: 200, height: 50))
+        button.backgroundColor = UIColor(patternImage: UIImage(named: "blue_pixel")!)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.layer.cornerRadius = 10.0
+        button.clipsToBounds = true
         button.setTitle("Сообщение", for: .normal)
-        button.backgroundColor = .black
+        button.layer.masksToBounds = false
         return button
     }()
     
     private let nextPageButton2: UIButton = {
         let button = UIButton(frame: CGRect(x: 0, y: 0, width: 200, height: 50))
-        button.setTitle("Еще одно", for: .normal)
-        button.backgroundColor = .black
+        button.backgroundColor = UIColor(patternImage: UIImage(named: "blue_pixel")!)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.layer.cornerRadius = 10.0
+        button.clipsToBounds = true
+        button.setTitle("Еще одно сообщение", for: .normal)
+        button.layer.masksToBounds = false
         return button
     }()
     
