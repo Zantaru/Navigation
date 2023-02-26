@@ -88,12 +88,6 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         tabBarController?.tabBar.isHidden = true
-        view.addSubview(scrollView)
-        scrollView.addSubview(conentView)
-        conentView.addSubview(logoImage)
-        conentView.addSubview(logInTextField)
-        conentView.addSubview(passwordTextField)
-        conentView.addSubview(logInButton)
         layout()
         logInButton.addTarget(self, action: #selector(tapAction), for: .touchUpInside)
         let tap = UITapGestureRecognizer(target: view, action: #selector(UIView.endEditing))
@@ -146,40 +140,45 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
     }
     
     private func layout() {
-             
-            NSLayoutConstraint.activate([
-                scrollView.topAnchor.constraint(equalTo: view.topAnchor),
-                scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-                scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-                scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+        view.addSubview(scrollView)
+        scrollView.addSubview(conentView)
+        conentView.addSubview(logoImage)
+        conentView.addSubview(logInTextField)
+        conentView.addSubview(passwordTextField)
+        conentView.addSubview(logInButton)
+        
+        NSLayoutConstraint.activate([
+            scrollView.topAnchor.constraint(equalTo: view.topAnchor),
+            scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
                 
-                conentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
-                conentView.topAnchor.constraint(equalTo: scrollView.topAnchor),
-                conentView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
-                conentView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
-                conentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
+            conentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
+            conentView.topAnchor.constraint(equalTo: scrollView.topAnchor),
+            conentView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
+            conentView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
+            conentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
                 
-                logoImage.topAnchor.constraint(equalTo: conentView.topAnchor, constant: 120),
-                logoImage.centerXAnchor.constraint(equalTo: conentView.centerXAnchor),
-                logoImage.heightAnchor.constraint(equalToConstant: 100),
-                logoImage.widthAnchor.constraint(equalToConstant: 100),
+            logoImage.topAnchor.constraint(equalTo: conentView.topAnchor, constant: 120),
+            logoImage.centerXAnchor.constraint(equalTo: conentView.centerXAnchor),
+            logoImage.heightAnchor.constraint(equalToConstant: 100),
+            logoImage.widthAnchor.constraint(equalToConstant: 100),
                 
-                logInTextField.topAnchor.constraint(equalTo: logoImage.bottomAnchor, constant: 120),
-                logInTextField.trailingAnchor.constraint(equalTo: conentView.trailingAnchor, constant: -16),
-                logInTextField.leadingAnchor.constraint(equalTo: conentView.leadingAnchor, constant: 16),
-                logInTextField.heightAnchor.constraint(equalToConstant: 50),
+            logInTextField.topAnchor.constraint(equalTo: logoImage.bottomAnchor, constant: 120),
+            logInTextField.trailingAnchor.constraint(equalTo: conentView.trailingAnchor, constant: -16),
+            logInTextField.leadingAnchor.constraint(equalTo: conentView.leadingAnchor, constant: 16),
+            logInTextField.heightAnchor.constraint(equalToConstant: 50),
                 
-                passwordTextField.topAnchor.constraint(equalTo: logInTextField.bottomAnchor),
-                passwordTextField.trailingAnchor.constraint(equalTo: conentView.trailingAnchor, constant: -16),
-                passwordTextField.leadingAnchor.constraint(equalTo: conentView.leadingAnchor, constant: 16),
-                passwordTextField.heightAnchor.constraint(equalToConstant: 50),
+            passwordTextField.topAnchor.constraint(equalTo: logInTextField.bottomAnchor),
+            passwordTextField.trailingAnchor.constraint(equalTo: conentView.trailingAnchor, constant: -16),
+            passwordTextField.leadingAnchor.constraint(equalTo: conentView.leadingAnchor, constant: 16),
+            passwordTextField.heightAnchor.constraint(equalToConstant: 50),
                 
-                logInButton.topAnchor.constraint(equalTo: passwordTextField.bottomAnchor, constant: 16),
-                logInButton.trailingAnchor.constraint(equalTo: conentView.trailingAnchor, constant: -16),
-                logInButton.leadingAnchor.constraint(equalTo: conentView.leadingAnchor, constant: 16),
-                logInButton.heightAnchor.constraint(equalToConstant: 50),
-                logInButton.bottomAnchor.constraint(equalTo: conentView.bottomAnchor)
-            
-            ])
+            logInButton.topAnchor.constraint(equalTo: passwordTextField.bottomAnchor, constant: 16),
+            logInButton.trailingAnchor.constraint(equalTo: conentView.trailingAnchor, constant: -16),
+            logInButton.leadingAnchor.constraint(equalTo: conentView.leadingAnchor, constant: 16),
+            logInButton.heightAnchor.constraint(equalToConstant: 50),
+            logInButton.bottomAnchor.constraint(equalTo: conentView.bottomAnchor)
+        ])
     }
 }

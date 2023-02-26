@@ -87,8 +87,7 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
-    func layout () {
+    private func layout () {
         addSubview(profileHeaderView)
         profileHeaderView.addSubview(fullNameLabel)
         profileHeaderView.addSubview(avatarImageView)
@@ -101,7 +100,6 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
             profileHeaderView.leadingAnchor.constraint(equalTo: leadingAnchor),
             profileHeaderView.trailingAnchor.constraint(equalTo: trailingAnchor),
             profileHeaderView.bottomAnchor.constraint(equalTo: bottomAnchor),
-//            profileHeaderView.heightAnchor.constraint(equalToConstant: 200),
             
             avatarImageView.topAnchor.constraint(equalTo: profileHeaderView.topAnchor, constant: 16),
             avatarImageView.leadingAnchor.constraint(equalTo: profileHeaderView.leadingAnchor, constant: 16),

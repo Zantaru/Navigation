@@ -9,7 +9,6 @@ import UIKit
 
 final class ProfileViewController: UIViewController {
     
-    private let profileHeaderView = ProfileHeaderView()
     let post = Post.makePostsArray()
     
     private lazy var tableView: UITableView = {
@@ -19,19 +18,26 @@ final class ProfileViewController: UIViewController {
         tableView.dataSource = self
         tableView.delegate = self
         tableView.register(PostTableViewCell.self, forCellReuseIdentifier: PostTableViewCell.identifaer)
+        tableView.register(PhotosTableViewCell.self, forCellReuseIdentifier: PhotosTableViewCell.identifaer)
         return tableView
     }()
    
     override func loadView() {
         super.loadView()
- //       view = profileHeaderView
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tabBarController?.tabBar.isHidden = false
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.title = "Profile"
         view.backgroundColor = .white
         layout()
     }
+    
     private func layout() {
         view.addSubview(tableView)
         
@@ -46,13 +52,25 @@ final class ProfileViewController: UIViewController {
 
 extension ProfileViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: PostTableViewCell.identifaer, for: indexPath) as! PostTableViewCell
-        cell.setupCell(post: post[indexPath.row])
-        return cell
+        
+        if indexPath.row == 0 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: PhotosTableViewCell.identifaer, for: indexPath) as! PhotosTableViewCell
+            cell.nextButton.addTarget(self, action: #selector(goToPhotoGalery), for: .touchUpInside)
+            return cell
+        } else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: PostTableViewCell.identifaer, for: indexPath) as! PostTableViewCell
+            cell.setupCell(post: post[indexPath.row-1])
+            return cell
+        }
+    }
+    
+    @objc func goToPhotoGalery() {
+          let photoScreen = PhotosViewController()
+          navigationController?.pushViewController(photoScreen, animated: true)
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        post.count
+        post.count+1
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
