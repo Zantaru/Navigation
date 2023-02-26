@@ -7,10 +7,10 @@
 
 import UIKit
 
-final class ProfileViewController: UIViewController {
+final class ProfileViewController: UIViewController, UIGestureRecognizerDelegate {
     
-    let post = Post.makePostsArray()
-    
+    private let post = Post.makePostsArray()
+    private let animateView = AnimateUIView()
     private lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .plain)
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -36,7 +36,52 @@ final class ProfileViewController: UIViewController {
         navigationItem.title = "Profile"
         view.backgroundColor = .white
         layout()
+        srtupAction()
     }
+    
+    @objc private func tapActionAvatar() {
+        view.addSubview(animateView)
+        
+        NSLayoutConstraint.activate([
+            animateView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 22),
+            animateView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            animateView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            animateView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+        ])
+        view.layoutIfNeeded()
+        
+        UIView.animate(withDuration: 2.0, delay: 0.9, usingSpringWithDamping: 0.9, initialSpringVelocity: 0.3, options: .curveEaseInOut) {
+            self.animateView.leadigConstraint.constant = 0
+            self.animateView.topConstraint.constant = (UIScreen.main.bounds.height - UIScreen.main.bounds.width)/6
+            self.animateView.widthConstraint.constant = UIScreen.main.bounds.width
+            self.animateView.heightConstraint.constant = UIScreen.main.bounds.width
+            self.animateView.avatarImageView.layer.cornerRadius = 0
+            self.animateView.hideView.alpha = 0.7
+            self.animateView.layoutIfNeeded()
+        } completion: { _ in
+            self.animateView.hideButton.isHidden = false
+        }
+    }
+    
+    @objc private func tapActionButton() {
+        UIView.animate(withDuration: 2.0, delay: 0.9, usingSpringWithDamping: 0.9, initialSpringVelocity: 0.3, options: .curveEaseInOut) {
+            self.animateView.leadigConstraint.constant = 16
+            self.animateView.topConstraint.constant = 16
+            self.animateView.widthConstraint.constant = 120
+            self.animateView.heightConstraint.constant = 120
+            self.animateView.avatarImageView.layer.cornerRadius = 60
+            self.animateView.hideButton.isHidden = true
+            self.animateView.hideView.alpha = 0
+            self.animateView.layoutIfNeeded()
+        } completion: { _ in
+            self.animateView.removeFromSuperview()
+        }
+    }
+    
+    private func srtupAction() {
+        animateView.hideButton.addTarget(self, action: #selector(tapActionButton), for: .touchUpInside)
+    }
+    
     
     private func layout() {
         view.addSubview(tableView)
@@ -63,7 +108,7 @@ extension ProfileViewController: UITableViewDataSource {
             return cell
         }
     }
-    
+        
     @objc func goToPhotoGalery() {
           let photoScreen = PhotosViewController()
           navigationController?.pushViewController(photoScreen, animated: true)
@@ -74,7 +119,10 @@ extension ProfileViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let view = ProfileHeaderView()
+        let view = ProfileHeaderView(reuseIdentifier: ProfileHeaderView.identifaer)
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapActionAvatar))
+        view.avatarImageView.isUserInteractionEnabled = true
+        view.avatarImageView.addGestureRecognizer(tapGesture)
         return view
     }
 }
