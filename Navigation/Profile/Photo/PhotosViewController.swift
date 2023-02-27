@@ -21,10 +21,10 @@ final class PhotosViewController: UIViewController {
     }()
         
     override func viewDidLoad() {
+        navigationItem.title = "Photo Gallery"
         super.viewDidLoad()
         layout()
         setupPhotoCollection()
-        navigationItem.title = "Photo Gallery"
     }
     
     private func setupPhotoCollection() {
@@ -73,3 +73,4 @@ extension PhotosViewController: UICollectionViewDelegateFlowLayout {
         UIEdgeInsets(top: sideInset, left: sideInset, bottom: sideInset, right: sideInset)
     }
 }
+

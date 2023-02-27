@@ -35,7 +35,7 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
         return view
     }()
 
-    private let avatarImageView: UIImageView = {
+    var avatarImageView: UIImageView = {
         let view = UIImageView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.image = UIImage(named: "BjceNTX0ZSU")
@@ -46,6 +46,27 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
         view.layer.borderColor = UIColor.white.cgColor
         return view
     }()
+    
+    private let hideView: UIView = {
+        let view = UIView()
+        view.alpha = 0.0
+        view.backgroundColor = .white
+        return view
+    }()
+    
+    private let hideButton: UIButton = {
+        let view = UIButton()
+        view.isHidden = true
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.setImage(UIImage(systemName: "xmark"), for: .normal)
+        return view
+        
+    }()
+    
+    private var leadigConstraint = NSLayoutConstraint()
+    private var topConstraint = NSLayoutConstraint()
+    private var widthConstraint = NSLayoutConstraint()
+    private var heightConstraint = NSLayoutConstraint()
     
     lazy var setStatusButton: UIButton = {
         let view = UIButton()
@@ -81,6 +102,7 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
     override init(reuseIdentifier: String?) {
             super.init(reuseIdentifier: reuseIdentifier)
         layout ()
+        
     }
     
     required init?(coder: NSCoder) {
@@ -89,17 +111,35 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
     
     private func layout () {
         addSubview(profileHeaderView)
+        profileHeaderView.addSubview(hideView)
+        profileHeaderView.addSubview(hideButton)
         profileHeaderView.addSubview(fullNameLabel)
         profileHeaderView.addSubview(avatarImageView)
         profileHeaderView.addSubview(statusLabel)
         profileHeaderView.addSubview(setStatusButton)
         profileHeaderView.addSubview(statusTextField)
         
+        leadigConstraint = avatarImageView.leadingAnchor.constraint(equalTo: profileHeaderView.leadingAnchor, constant: 16)
+        topConstraint = avatarImageView.leadingAnchor.constraint(equalTo: profileHeaderView.leadingAnchor, constant: 16)
+        heightConstraint = avatarImageView.heightAnchor.constraint(equalToConstant: 120)
+        widthConstraint = avatarImageView.widthAnchor.constraint(equalToConstant: 120)
+        
+        
         NSLayoutConstraint.activate([
             profileHeaderView.topAnchor.constraint(equalTo: topAnchor),
             profileHeaderView.leadingAnchor.constraint(equalTo: leadingAnchor),
             profileHeaderView.trailingAnchor.constraint(equalTo: trailingAnchor),
             profileHeaderView.bottomAnchor.constraint(equalTo: bottomAnchor),
+
+            hideButton.topAnchor.constraint(equalTo: profileHeaderView.topAnchor, constant: 12),
+            hideButton.leadingAnchor.constraint(equalTo: profileHeaderView.leadingAnchor, constant: 12),
+            
+//            hideView.leadingAnchor.constraint(equalTo: leadingAnchor),
+//            hideView.topAnchor.constraint(equalTo: topAnchor),
+//            hideView.trailingAnchor.constraint(equalTo: trailingAnchor),
+//            hideView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            
+            leadigConstraint,topConstraint, heightConstraint, widthConstraint,
             
             avatarImageView.topAnchor.constraint(equalTo: profileHeaderView.topAnchor, constant: 16),
             avatarImageView.leadingAnchor.constraint(equalTo: profileHeaderView.leadingAnchor, constant: 16),
