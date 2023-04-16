@@ -1,13 +1,13 @@
 //
-//  TableViewCell.swift
+//  PostView.swift
 //  Navigation
 //
-//  Created by Антон Зудинов on 24.02.2023.
+//  Created by Антон Зудинов on 16.04.2023.
 //
 
 import UIKit
 
-final class PostTableViewCell: UITableViewCell {
+class PostView: UIView {
     
     private let contentViewPost: UIView = {
         let view = UIView()
@@ -35,7 +35,7 @@ final class PostTableViewCell: UITableViewCell {
         return view
     }()
     
-    lazy var image: UIImageView = {
+    private let image: UIImageView = {
         let view = UIImageView()
         view.contentMode = .scaleAspectFit
         view.backgroundColor = .black
@@ -43,7 +43,7 @@ final class PostTableViewCell: UITableViewCell {
         return view
     }()
     
-    lazy var likes: UILabel = {
+    private let likes: UILabel = {
         let view = UILabel()
         view.backgroundColor = .white
         view.font = UIFont.systemFont(ofSize: 16)
@@ -58,22 +58,13 @@ final class PostTableViewCell: UITableViewCell {
         return view
     }()
     
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
+    override init(frame: CGRect) {
+        super.init(frame: .zero)
         layout()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    override func prepareForReuse() {
-        super.prepareForReuse()
-        image.image = nil
-        author.text = ""
-        descriptionPost.text = ""
-        likes.text = ""
-        views.text = ""
     }
     
     func setupCell(post: Post) {
@@ -85,15 +76,16 @@ final class PostTableViewCell: UITableViewCell {
     }
     
     private func layout() {
-        [contentViewPost, author, image, descriptionPost, likes, views].forEach { contentView.addSubview($0) }
+        self.addSubview(contentViewPost)
+        [author, image, descriptionPost, likes, views].forEach { contentViewPost.addSubview($0) }
           
         let viewInsert: CGFloat = 16
         
         NSLayoutConstraint.activate([
-            contentViewPost.topAnchor.constraint(equalTo: contentView.topAnchor),
-            contentViewPost.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            contentViewPost.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            contentViewPost.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            contentViewPost.topAnchor.constraint(equalTo: self.topAnchor),
+            contentViewPost.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            contentViewPost.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            contentViewPost.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor),
             
             author.topAnchor.constraint(equalTo: contentViewPost.topAnchor, constant: viewInsert),
             author.leadingAnchor.constraint(equalTo: contentViewPost.leadingAnchor, constant: viewInsert),
@@ -110,11 +102,9 @@ final class PostTableViewCell: UITableViewCell {
             
             likes.topAnchor.constraint(equalTo: descriptionPost.bottomAnchor, constant: viewInsert),
             likes.leadingAnchor.constraint(equalTo: contentViewPost.leadingAnchor, constant: viewInsert),
-            likes.bottomAnchor.constraint(equalTo: contentViewPost.bottomAnchor, constant: -viewInsert),
             
             views.topAnchor.constraint(equalTo: descriptionPost.bottomAnchor, constant: viewInsert),
-            views.trailingAnchor.constraint(equalTo: contentViewPost.trailingAnchor, constant: -viewInsert),
-            views.bottomAnchor.constraint(equalTo: contentViewPost.bottomAnchor, constant: -viewInsert)
+            views.trailingAnchor.constraint(equalTo: contentViewPost.trailingAnchor, constant: -viewInsert)
         ])
     }
 }

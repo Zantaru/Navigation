@@ -37,7 +37,7 @@ class AnimateUIView: UIView {
     let hideView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.alpha = 0.5
+        view.alpha = 0.0
         view.backgroundColor = .white
         return view
     }()
@@ -45,6 +45,7 @@ class AnimateUIView: UIView {
     let hideButton: UIButton = {
         let view = UIButton()
         view.isHidden = true
+        view.alpha = 0.0
         view.translatesAutoresizingMaskIntoConstraints = false
         view.setImage(UIImage(systemName: "xmark"), for: .normal)
         return view
@@ -64,6 +65,13 @@ class AnimateUIView: UIView {
     var topConstraint = NSLayoutConstraint()
     var widthConstraint = NSLayoutConstraint()
     var heightConstraint = NSLayoutConstraint()
+    var topAvatarHideConstraint = NSLayoutConstraint()
+    var leadingAvatarHideConstraint = NSLayoutConstraint()
+    var heightAvatarHideConstraint = NSLayoutConstraint()
+    var widthAvatarHideConstraint = NSLayoutConstraint()
+    
+    public let insert:CGFloat = 16
+    public let avatarInsert:CGFloat = 64
     
     private func layout () {
         addSubview(profileHeaderView)
@@ -72,11 +80,14 @@ class AnimateUIView: UIView {
         profileHeaderView.addSubview(hideButton)
         profileHeaderView.addSubview(avatarImageView)
         
-        leadigConstraint = avatarImageView.leadingAnchor.constraint(equalTo: profileHeaderView.leadingAnchor, constant: 16)
-        topConstraint = avatarImageView.topAnchor.constraint(equalTo: profileHeaderView.topAnchor, constant: 16)
+        leadigConstraint = avatarImageView.leadingAnchor.constraint(equalTo: profileHeaderView.leadingAnchor, constant: insert)
+        topConstraint = avatarImageView.topAnchor.constraint(equalTo: profileHeaderView.topAnchor, constant: avatarInsert - 40)
         heightConstraint = avatarImageView.heightAnchor.constraint(equalToConstant: 120)
         widthConstraint = avatarImageView.widthAnchor.constraint(equalToConstant: 120)
-        
+        topAvatarHideConstraint = avatarHideImageView.topAnchor.constraint(equalTo: profileHeaderView.topAnchor, constant: avatarInsert - 40)
+        leadingAvatarHideConstraint = avatarHideImageView.leadingAnchor.constraint(equalTo: profileHeaderView.safeAreaLayoutGuide.leadingAnchor, constant: insert)
+        heightAvatarHideConstraint = avatarHideImageView.heightAnchor.constraint(equalToConstant: 120)
+        widthAvatarHideConstraint = avatarHideImageView.widthAnchor.constraint(equalToConstant: 120)
         
         NSLayoutConstraint.activate([
             profileHeaderView.topAnchor.constraint(equalTo: topAnchor),
@@ -84,20 +95,17 @@ class AnimateUIView: UIView {
             profileHeaderView.trailingAnchor.constraint(equalTo: trailingAnchor),
             profileHeaderView.bottomAnchor.constraint(equalTo: bottomAnchor),
             
-            avatarHideImageView.leadingAnchor.constraint(equalTo: profileHeaderView.safeAreaLayoutGuide.leadingAnchor, constant: 16),
-            avatarHideImageView.topAnchor.constraint(equalTo: profileHeaderView.topAnchor, constant: 16),
-            avatarHideImageView.heightAnchor.constraint(equalToConstant: 120),
-            avatarHideImageView.widthAnchor.constraint(equalToConstant: 120),
+            topAvatarHideConstraint, leadingAvatarHideConstraint, heightAvatarHideConstraint, widthAvatarHideConstraint,
 
-            hideButton.topAnchor.constraint(equalTo: profileHeaderView.topAnchor, constant: 12),
-            hideButton.leadingAnchor.constraint(equalTo: profileHeaderView.leadingAnchor, constant: 12),
+            hideButton.topAnchor.constraint(equalTo: profileHeaderView.topAnchor, constant: insert),
+            hideButton.leadingAnchor.constraint(equalTo: profileHeaderView.leadingAnchor, constant: insert),
             
             hideView.leadingAnchor.constraint(equalTo: leadingAnchor),
             hideView.topAnchor.constraint(equalTo: topAnchor),
             hideView.trailingAnchor.constraint(equalTo: trailingAnchor),
             hideView.bottomAnchor.constraint(equalTo: bottomAnchor),
             
-            leadigConstraint,topConstraint, heightConstraint, widthConstraint
+            leadigConstraint, topConstraint, heightConstraint, widthConstraint
         ])
     }
 }

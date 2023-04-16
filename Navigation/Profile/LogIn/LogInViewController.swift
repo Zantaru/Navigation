@@ -10,7 +10,6 @@ import UIKit
 class LogInViewController: UIViewController, UITextFieldDelegate {
     
     private let notification = NotificationCenter.default
-    
     private var logIn: String = ""
     private var password: String = ""
     
@@ -85,6 +84,15 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
         return button
     }()
     
+    var pasWarningLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "Password must include a minimum of 4 character"
+        label.font = UIFont.systemFont(ofSize: 10)
+        label.isHidden = true
+        return label
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         tabBarController?.tabBar.isHidden = true
@@ -133,10 +141,37 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
     }
 
     @objc func tapAction() {
-        print(logIn, password)
-        tabBarController?.tabBar.isHidden = false
-        let profileScreen = ProfileViewController()
-        navigationController?.pushViewController(profileScreen, animated: true)
+        
+        if logIn == "" {
+            logInTextField.shake()
+        } else {
+            if !logIn.isEmail() {
+                let allertController = UIAlertController(title: "Atention!", message: "login is invalid", preferredStyle: .alert)
+                let okAction = UIAlertAction(title: "OK", style: .default)
+                allertController.addAction(okAction)
+                present(allertController, animated: true)
+            }
+        }
+        
+        if password == "" {
+            passwordTextField.shake()
+        } else {
+            if password.count < 4 {
+                pasWarningLabel.isHidden = false
+                pasWarningLabel.shake()
+            }
+        }
+
+        if logIn == "zantar@yandex.ru" && password == "1234" {
+            tabBarController?.tabBar.isHidden = false
+            let profileScreen = ProfileViewController()
+            navigationController?.pushViewController(profileScreen, animated: true)
+        } else if logIn.isEmail() && password != "" && password.count >= 4 {
+            let allertController = UIAlertController(title: "Acsess denite!", message: "login or password is invalid", preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "OK", style: .default)
+            allertController.addAction(okAction)
+            present(allertController, animated: true)
+        }
     }
     
     private func layout() {
@@ -145,7 +180,9 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
         conentView.addSubview(logoImage)
         conentView.addSubview(logInTextField)
         conentView.addSubview(passwordTextField)
+        conentView.addSubview(pasWarningLabel)
         conentView.addSubview(logInButton)
+        
         
         NSLayoutConstraint.activate([
             scrollView.topAnchor.constraint(equalTo: view.topAnchor),
@@ -178,7 +215,11 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
             logInButton.trailingAnchor.constraint(equalTo: conentView.trailingAnchor, constant: -16),
             logInButton.leadingAnchor.constraint(equalTo: conentView.leadingAnchor, constant: 16),
             logInButton.heightAnchor.constraint(equalToConstant: 50),
-            logInButton.bottomAnchor.constraint(equalTo: conentView.bottomAnchor)
+            logInButton.bottomAnchor.constraint(equalTo: conentView.bottomAnchor),
+
+            pasWarningLabel.topAnchor.constraint(equalTo: passwordTextField.bottomAnchor),
+            pasWarningLabel.centerXAnchor.constraint(equalTo: logInButton.centerXAnchor),
+            pasWarningLabel.bottomAnchor.constraint(equalTo: logInButton.topAnchor)
         ])
     }
 }

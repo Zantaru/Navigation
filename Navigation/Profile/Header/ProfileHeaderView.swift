@@ -47,22 +47,6 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
         return view
     }()
     
-    private let hideView: UIView = {
-        let view = UIView()
-        view.alpha = 0.0
-        view.backgroundColor = .white
-        return view
-    }()
-    
-    private let hideButton: UIButton = {
-        let view = UIButton()
-        view.isHidden = true
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.setImage(UIImage(systemName: "xmark"), for: .normal)
-        return view
-        
-    }()
-    
     private var leadigConstraint = NSLayoutConstraint()
     private var topConstraint = NSLayoutConstraint()
     private var widthConstraint = NSLayoutConstraint()
@@ -111,8 +95,6 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
     
     private func layout () {
         addSubview(profileHeaderView)
-        profileHeaderView.addSubview(hideView)
-        profileHeaderView.addSubview(hideButton)
         profileHeaderView.addSubview(fullNameLabel)
         profileHeaderView.addSubview(avatarImageView)
         profileHeaderView.addSubview(statusLabel)
@@ -130,14 +112,6 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
             profileHeaderView.leadingAnchor.constraint(equalTo: leadingAnchor),
             profileHeaderView.trailingAnchor.constraint(equalTo: trailingAnchor),
             profileHeaderView.bottomAnchor.constraint(equalTo: bottomAnchor),
-
-            hideButton.topAnchor.constraint(equalTo: profileHeaderView.topAnchor, constant: 12),
-            hideButton.leadingAnchor.constraint(equalTo: profileHeaderView.leadingAnchor, constant: 12),
-            
-//            hideView.leadingAnchor.constraint(equalTo: leadingAnchor),
-//            hideView.topAnchor.constraint(equalTo: topAnchor),
-//            hideView.trailingAnchor.constraint(equalTo: trailingAnchor),
-//            hideView.bottomAnchor.constraint(equalTo: bottomAnchor),
             
             leadigConstraint,topConstraint, heightConstraint, widthConstraint,
             
@@ -172,9 +146,10 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
     }
     
     @objc func tapAction () {
-        statusLabel.text = statusText
-        if statusText != nil {
-            print(statusText!)
+        if statusText == nil || statusText == "" {
+            statusTextField.shake()
+        } else {
+            statusLabel.text = statusText
         }
     }
 }

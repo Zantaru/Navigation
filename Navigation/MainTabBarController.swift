@@ -22,7 +22,6 @@ final class MainTabBarController: UITabBarController {
         feedViewController.tabBarItem.image = UIImage(systemName: "house.fill")
         logInViwController.tabBarItem.title = "Prifile"
         logInViwController.tabBarItem.image = UIImage(systemName: "person.fill")
-        viewControllers = [feedViewController,logInViwController]
+        viewControllers = [logInViwController, feedViewController]
     }
-    
 }
