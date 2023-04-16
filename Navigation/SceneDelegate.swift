@@ -11,20 +11,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
 
-
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let scene = (scene as? UIWindowScene) else { return }
-        let feedViewController = UINavigationController(rootViewController: FeedViewController())
-        let profileViewController = UINavigationController(rootViewController: ProfileViewController())
-        let tabBarController = UITabBarController()
-        tabBarController.viewControllers = [feedViewController, profileViewController]
-        feedViewController.tabBarItem.title = "Сообщения"
-        feedViewController.tabBarItem.image = UIImage(systemName: "pencil")
-        profileViewController.tabBarItem.title = "Профиль"
-        profileViewController.tabBarItem.image = UIImage(systemName: "folder")
-        
         window = UIWindow(windowScene: scene)
-        window?.rootViewController = tabBarController
+        window?.rootViewController = MainTabBarController()
         window?.makeKeyAndVisible()
     }
 
@@ -55,7 +45,4 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Use this method to save data, release shared resources, and store enough scene-specific state information
         // to restore the scene back to its current state.
     }
-
-
 }
-

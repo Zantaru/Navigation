@@ -40,5 +40,4 @@ final class PostViewController: UIViewController {
         let thirdVC = InfoViewController()
         present(thirdVC, animated: true)
     }
-
 }
